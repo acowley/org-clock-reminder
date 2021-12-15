@@ -6,7 +6,7 @@
 ;; URL: https://github.com/inickey/org-clock-reminder
 ;; Keywords: calendar, convenience
 ;; Version: 0.1
-;; Package-Requires: ((emacs "26.1"))
+;; Package-Requires: ((emacs "26.1") (alert "1.2"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -34,7 +34,7 @@
 ;;
 ;;; Code:
 
-(require 'notifications)
+(require 'alert)
 (require 'org-clock)
 (require 'org-duration)
 
@@ -118,10 +118,9 @@
 (defun org-clock-reminder--notify (message)
   "Sends MESSAGE with given body with `notifications-notify."
   (let ((icon-path (org-clock-reminder--icon)))
-    (notifications-notify :title org-clock-reminder-notification-title
-                          :body message
-                          :app-icon icon-path)))
-  
+    (alert message
+           :title org-clock-reminder-notification-title
+           :icon icon-path)))
 
 (defun org-clock-reminder--timer-function ()
   "This function will be called each timer iteration to prepare and send notification."
